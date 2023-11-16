@@ -16,18 +16,28 @@ public class User {
     
     private String password;
     
-    private String fullName;
+    private String hoVaTen;
         
     private String gioiTinh;
 
-    public User(String id, String username, String password, String fullName, String gioiTinh) {
+    public User(String id, String username, String password, String hoVaTen, String gioiTinh) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
+        this.hoVaTen = hoVaTen;
         this.gioiTinh = gioiTinh;
     }
 
+    public String getHoVaTen() {
+        return hoVaTen;
+    }
+
+    public void setHoVaTen(String hoVaTen) {
+        this.hoVaTen = hoVaTen;
+    }
+
+    
+    
     public User() {
     }
 
@@ -55,13 +65,6 @@ public class User {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getGioiTinh() {
         return gioiTinh;
