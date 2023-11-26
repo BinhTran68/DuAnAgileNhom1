@@ -1,28 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package service;
-
+package model;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
- * @author ADMIN
+ * @author Acer
  */
 public class DBConnect {
-     private static final String USERNAME = "sa";
+    private static final String USERNAME = "sa";
     private static final String PASSWORD = "123";
     private static final String SERVER = "localhost";
     private static final String PORT = "1433";
-    private static final String DATABASE_NAME = "nhom1_agile_qlstv";
-    private static final boolean USING_SSL = true ;
+    private static final String DATABASE_NAME = "java3_database_demo_chuan";
+    private static final boolean USING_SSL = true;
+    
     
     private static String CONNECT_STRING;
     
@@ -43,7 +41,7 @@ public class DBConnect {
             CONNECT_STRING = connectStringBuilder.toString();
             System.out.println("Connect String có dạng: " + CONNECT_STRING);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(service.DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -52,7 +50,7 @@ public class DBConnect {
              return DriverManager.getConnection(CONNECT_STRING);
          } catch (SQLException ex) {
              ex.printStackTrace();
-             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(service.DBConnect.class.getName()).log(Level.SEVERE, null, ex);
              return null;
          }
     }
