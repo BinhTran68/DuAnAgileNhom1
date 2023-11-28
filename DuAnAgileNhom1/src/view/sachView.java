@@ -4,17 +4,36 @@
  */
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import service.sachService;
+import model.Sach;
+
 /**
+ *
  *
  * @author Acer
  */
 public class sachView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form sachView
-     */
+    sachService ss = new sachService();
+    Sach sach = new Sach();
+    DefaultTableModel tblModel;
+
     public sachView() {
         initComponents();
+        this.fillTable(ss.getAll());
+    }
+
+    public void fillTable(List<Sach> list) {
+        tblModel = (DefaultTableModel) tblSach.getModel();
+        tblModel.setRowCount(0);
+        for (Sach sach1 : list) {
+            tblModel.addRow(sach1.toDataRow());
+        }
+
     }
 
     /**
@@ -140,6 +159,11 @@ public class sachView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSachMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSach);
         if (tblSach.getColumnModel().getColumnCount() > 0) {
             tblSach.getColumnModel().getColumn(0).setResizable(false);
@@ -150,10 +174,25 @@ public class sachView extends javax.swing.JFrame {
         }
 
         jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Sửa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Xóa");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Tìm kiếm");
 
@@ -211,6 +250,41 @@ public class sachView extends javax.swing.JFrame {
     private void txtXuatBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtXuatBanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtXuatBanActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Sach sach = new Sach(txtTenSach.getText(), txtTacGia.getText(), txtXuatBan.getText(), Integer.valueOf(txtGia.getText()), Integer.valueOf(txtSoLuong.getText()));
+        if (ss.inSert(sach) > 0) {
+            fillTable(ss.getAll());
+            JOptionPane.showMessageDialog(this, "them thanh cong");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "them khong thnah cong");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void showData(int index) {
+        txtTenSach.setText(tblSach.getValueAt(index, 0).toString());
+        txtTacGia.setText(tblSach.getValueAt(index, 1).toString());
+        txtXuatBan.setText(tblSach.getValueAt(index, 2).toString());
+        txtGia.setText(tblSach.getValueAt(index, 3).toString());
+        txtSoLuong.setText(tblSach.getValueAt(index, 4).toString());
+
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String ma = txtTenSach.getText();
+        if (ss.deleteForm(ma) > 0) {
+            fillTable(ss.getAll());
+            JOptionPane.showMessageDialog(this, "Xoa thanh cong");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
+        int index = tblSach.getSelectedRow();
+        showData(index);
+    }//GEN-LAST:event_tblSachMouseClicked
 
     /**
      * @param args the command line arguments
