@@ -27,6 +27,12 @@ public class sachView extends javax.swing.JFrame {
         this.fillTable(ss.getAll());
     }
 
+    private Sach readForm() {
+        return new Sach(txtTenSach.getText(), txtTacGia.getText(),
+                txtXuatBan.getText(), Integer.valueOf(txtGia.getText()), Integer.valueOf(txtSoLuong.getText()));
+
+    }
+
     public void fillTable(List<Sach> list) {
         tblModel = (DefaultTableModel) tblSach.getModel();
         tblModel.setRowCount(0);
@@ -195,8 +201,18 @@ public class sachView extends javax.swing.JFrame {
         });
 
         jButton4.setText("Tìm kiếm");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Sắp xếp");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,13 +294,25 @@ public class sachView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if(ss.updateSach(txtTenSach.getText(), readForm())>0){
+            JOptionPane.showMessageDialog(this,"sửa thành công");
+            fillTable(ss.getAll());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
         int index = tblSach.getSelectedRow();
         showData(index);
     }//GEN-LAST:event_tblSachMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        fillTable(ss.sortByPrice());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       
+        fillTable(ss.searchByName(txtTenSach.getText()));
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
