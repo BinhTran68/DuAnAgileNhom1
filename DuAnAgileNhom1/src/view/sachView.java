@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import service.sachService;
 import model.Sach;
 
+
 /**
  *
  *
@@ -25,6 +26,7 @@ public class sachView extends javax.swing.JFrame {
     public sachView() {
         initComponents();
         this.fillTable(ss.getAll());
+        
     }
 
     private Sach readForm() {
@@ -40,6 +42,88 @@ public class sachView extends javax.swing.JFrame {
             tblModel.addRow(sach1.toDataRow());
         }
 
+    }
+
+    public boolean validateForm() {
+         if (txtTenSach.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Tên sách không được để trống");
+            return false;
+        }
+        for (Sach sach : ss.getAll()) {
+            if (txtTenSach.getText().equalsIgnoreCase(sach.getTenSach())) {
+                JOptionPane.showMessageDialog(this, "Tên sách không được giống nhau");
+                return false;
+            }
+        }
+       
+        if (txtTacGia.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, " Tác giả không được để trống");
+            return false;
+        }
+        if (txtXuatBan.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nhà xuất bản không được để trống ");
+            return false;
+        }
+        if (txtGia.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Giá không được để trống");
+            return false;
+        }
+        try {
+            Integer.valueOf(txtGia.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá phải là 1 số");
+            return false;
+        }
+        if (txtSoLuong.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Số lượng không được để trống");
+            return false;
+        }
+        try {
+            Integer.valueOf(txtSoLuong.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá phải là 1 số");
+            return false;
+        }
+
+        return true;
+    }
+     public boolean validateFormCN() {
+         if (txtTenSach.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Tên sách không được để trống");
+            return false;
+        }
+        
+       
+        if (txtTacGia.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, " Tác giả không được để trống");
+            return false;
+        }
+        if (txtXuatBan.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nhà xuất bản không được để trống ");
+            return false;
+        }
+        if (txtGia.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Giá không được để trống");
+            return false;
+        }
+        try {
+            Integer.valueOf(txtGia.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá phải là 1 số");
+            return false;
+        }
+        if (txtSoLuong.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Số lượng không được để trống");
+            return false;
+        }
+        try {
+            Integer.valueOf(txtSoLuong.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá phải là 1 số");
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -252,11 +336,11 @@ public class sachView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -268,14 +352,17 @@ public class sachView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtXuatBanActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Sach sach = new Sach(txtTenSach.getText(), txtTacGia.getText(), txtXuatBan.getText(), Integer.valueOf(txtGia.getText()), Integer.valueOf(txtSoLuong.getText()));
-        if (ss.inSert(sach) > 0) {
-            fillTable(ss.getAll());
-            JOptionPane.showMessageDialog(this, "them thanh cong");
 
-        } else {
-            JOptionPane.showMessageDialog(this, "them khong thnah cong");
+        if (validateForm()) {
+            if (ss.inSert(readForm()) > 0) {
+                fillTable(ss.getAll());
+                JOptionPane.showMessageDialog(this, "them thanh cong");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "them khong thnah cong");
+            }
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
     private void showData(int index) {
         txtTenSach.setText(tblSach.getValueAt(index, 0).toString());
@@ -294,10 +381,13 @@ public class sachView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(ss.updateSach(txtTenSach.getText(), readForm())>0){
-            JOptionPane.showMessageDialog(this,"sửa thành công");
-            fillTable(ss.getAll());
-        }
+       if(validateFormCN()){
+           if (ss.updateSach(txtTenSach.getText(), readForm()) > 0) {
+               JOptionPane.showMessageDialog(this, "sửa thành công");
+               fillTable(ss.getAll());
+           }
+       }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
@@ -310,7 +400,7 @@ public class sachView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
+
         fillTable(ss.searchByName(txtTenSach.getText()));
     }//GEN-LAST:event_jButton4ActionPerformed
 
