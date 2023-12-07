@@ -16,18 +16,39 @@ public class User {
     
     private String password;
     
+    private boolean gioiTinh;
+    
+    
     private String hoVaTen;
         
-    private String gioiTinh;
+    private String quyen;
 
-    public User(String id, String username, String password, String hoVaTen, String gioiTinh) {
+    public User(String id, String username, String password, String hoVaTen, String quyen) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.hoVaTen = hoVaTen;
-        this.gioiTinh = gioiTinh;
+        this.quyen = quyen;
     }
 
+    public User(String id, String username, String password, boolean gioiTinh, String hoVaTen, String quyen) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.gioiTinh = gioiTinh;
+        this.hoVaTen = hoVaTen;
+        this.quyen = quyen;
+    }
+
+    public User(String username, String password, boolean gioiTinh, String hoVaTen, String quyen) {
+        this.username = username;
+        this.password = password;
+        this.gioiTinh = gioiTinh;
+        this.hoVaTen = hoVaTen;
+        this.quyen = quyen;
+    }
+    
+    
     public String getHoVaTen() {
         return hoVaTen;
     }
@@ -65,19 +86,22 @@ public class User {
         this.password = password;
     }
 
-
-    public String getGioiTinh() {
-        return gioiTinh;
+    public String getQuyen() {
+        return quyen;
     }
 
-    public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
+    public void setQuyen(String quyen) {
+        this.quyen = quyen;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", fullName=" + hoVaTen + ", gioiTinh=" + gioiTinh + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", hoVaTen=" + hoVaTen + ", quyen=" + quyen + '}';
     }
-    
+
+
+   
+
+   
     
 }
